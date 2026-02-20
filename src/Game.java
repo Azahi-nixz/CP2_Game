@@ -16,13 +16,13 @@ public class Game {
             try {
                 char choice = input.next().charAt(0);
 
-                if (choice == 'Y') {
+                if (choice == 'N') {
                     mainMenu();
                     break;
                 }
 
 
-                else if (choice == 'N') {
+                else if (choice == 'Y') {
                     Tutorial();
                     break;
                 }
@@ -37,7 +37,125 @@ public class Game {
     }
 
     public static void mainMenu() {
-        System.out.println();
+        String narration = ("""
+                You died in such a boring manner, and as a compensation, you will be reincarnated in 
+                another world.
+                
+                You woke up in a seemingly bright place, odd yet you don't feel any dangers. Just peace.
+                
+                Isn't it nice?
+                
+                But no its not. Instead of meeting a goddess to send you out to your adventure, you have been
+                greeted by a floating screen.
+                """);
+
+        typeWriter(narration);
+
+        String narration1 = ("""
+                FLOATING SCREEN: "Hello human, what's your name?" she said in a rather AI-ish manner.
+                """);
+
+        typeWriter(narration1);
+
+        System.out.println("Your name: ");
+        String name = input.nextLine();
+
+        String narration2 = ("Hello, " + name + ". Welcome to Stellaris-4.");
+
+        typeWriter(narration2);
+
+        String narration3 = ("""
+                You tried to speak another word but for some reason, no words came out of your mouth.
+                
+                FLOATING SCREEN: "Please refrain from speaking unless I asked you to do so."
+                
+                You feel irritated by her arrogant character, so you decided to smack her with your hand.
+                
+                """);
+
+        typeWriter(narration3);
+
+        String narration4 = ("""
+                FLOATING SCREEN: W-what the hell did you just do? she said, her former AI-ish voice accent? Gone.
+                She now sounds like a hololive vtuber who's annoyed by her fans.
+                
+                But you still can't speak anything, so you just made a silly teasing face to rile her up.
+                
+                J-Just choose your class already and go out!
+                
+                And then, a console displayed in front of you. Showing some characters that seems like those characters in the
+                RPG games you used to play when you're still alive.
+                """);
+
+        typeWriter(narration4);
+
+        System.out.println("""
+                GUARD - excels on tanking damage.
+                MARKSMAN - excels on long range combat.
+                MAGICIAN - primarily uses magic for combat.
+                SUPPORT - excels on giving buff and HP regeneration.
+                SWORDSMAN - excels on short to mid range combat. Primarily uses sword or any similar weapon.
+                ASSASSIN - excels in stealth, surprise attacks.
+                BRUTE - excels in hand to hand combat.
+                """);
+
+        String characterClass = input.next();
+
+        while (true) {
+            try {
+                characterClass = characterClass.toLowerCase();
+
+                if  (characterClass.equals("guard")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("marksman")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("magician")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("support")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("swordsman")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("asassin")) {
+                    //
+                    break;
+                }
+
+                else if (characterClass.equals("brute")) {
+                    //
+                    break;
+                }
+
+                else {
+                    System.err.println("Invalid character choice. Please try again.");
+                }
+            }
+            catch (Exception e) {
+                System.err.println("Invalid character choice. Please try again.");
+            }
+        }
+
+
+
+
+
+
+
+
     }
 
     public static void Tutorial() {
@@ -64,12 +182,12 @@ public class Game {
         System.out.println("""
                 This is a console game so expect this structure sample:
                 
+                [YOUR LEVEL]
+                
                 HP - 100/100   DEF - 20    SPD - 5    SANITY - 20/20
                 ATK - 50   MANA - 20/20   ACC - 50   MONEY - 2000
                 
-                [SKILLS HERE]
-                
-                [BUFFS HERE]
+                [EQUIPMENTS HERE]
                 
                 [NARRATION HERE]
                 
@@ -80,8 +198,9 @@ public class Game {
                 """);
 
         System.out.println("""
-                Buffs, skills, and combat exist here, but you will learn about that in-game.
+                Buffs, skills, items, and combat exist here, but you will learn about that in-game.
                 """);
+
 
         System.out.println("Proceed to main menu now? Y/N");
 
@@ -92,12 +211,11 @@ public class Game {
 
                 if (choice == 'Y') {
                     mainMenu();
-                    break;
                 } else if (choice == 'N') {
                     Tutorial();
                     System.out.println("Proceed to main menu now? Y/N");
                 } else {
-                    System.err.println("Invalid choice! Please try again.");
+                    System.err.println("Invalid choice! Please try again. Remember to use capital letters!");
                 }
             } catch (Exception e) {
                 System.err.println("Invalid choice! Please try again.");
@@ -106,6 +224,17 @@ public class Game {
 
         }
 
+    }
+
+    public static void typeWriter(String narration) {
+        try {
+            for (char c : narration.toCharArray()) {
+                System.out.print(c);
+                Thread.sleep(50);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
