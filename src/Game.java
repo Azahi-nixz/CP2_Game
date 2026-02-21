@@ -3,6 +3,40 @@ import java.util.*;
 public class Game {
 
     static Scanner input = new Scanner(System.in);
+    static int plotProgression = 0;
+    static String finaStats = "";
+    static String finalName = "";
+
+    static int characterClassStats[][] = {
+            {200, 20, 100, 10, 20, 10, 50}, //GUARD STATS
+            {100, 50, 50, 20, 30, 50, 50}, // MARKSMAN STATS
+            {100, 30, 50, 100, 20, 30, 60}, //MAGICIAN STATS
+            {150, 20, 80, 100, 20, 10, 100}, //SUPPORT STATS
+            {100, 70, 50, 10, 20, 20, 50}, //SWORDSMAN STATS
+            {70, 100, 20, 30, 50, 50, 50}, //ASSASSIN STATS
+            {150, 70, 80, 10, 10, 10, 50}, //BRUTE STATS
+            {0}     //MONEY
+    };
+
+    public static void stats(int characterClassNum, String characterClass) {
+        String stats = """
+                Character STATS : %s
+                HP: %d | ATK: %d | DEF: %d | MANA: %d | SPD: %d | ACC: %d | SANITY: %d | MONEY: %d
+                """.formatted(
+                   characterClass,
+                   characterClassStats[characterClassNum][0]
+                , characterClassStats[characterClassNum][1]
+                , characterClassStats[characterClassNum][2]
+                , characterClassStats[characterClassNum][3]
+                , characterClassStats[characterClassNum][4]
+                , characterClassStats[characterClassNum][5]
+                , characterClassStats[characterClassNum][6]
+                , characterClassStats[7][0]
+
+        );
+
+        finaStats += stats;
+    }
 
     public static void Greetings() {
         System.out.println("""
@@ -58,7 +92,11 @@ public class Game {
         typeWriter(narration1);
 
         System.out.println("Your name: ");
+        input.nextLine();
         String name = input.nextLine();
+
+        finalName = name;
+
 
         String narration2 = ("Hello, " + name + ". Welcome to Stellaris-4.");
 
@@ -76,7 +114,7 @@ public class Game {
         typeWriter(narration3);
 
         String narration4 = ("""
-                FLOATING SCREEN: W-what the hell did you just do? she said, her former AI-ish voice accent? Gone.
+                FLOATING SCREEN: "W-what the hell did you just do?" she said, her former AI-ish voice accent? Gone.
                 She now sounds like a hololive vtuber who's annoyed by her fans.
                 
                 But you still can't speak anything, so you just made a silly teasing face to rile her up.
@@ -97,59 +135,106 @@ public class Game {
                 SWORDSMAN - excels on short to mid range combat. Primarily uses sword or any similar weapon.
                 ASSASSIN - excels in stealth, surprise attacks.
                 BRUTE - excels in hand to hand combat.
+                
+                Please choose your class. Make sure to spell it correctly. (NON-SENSITIVE CASE)
                 """);
 
-        String characterClass = input.next();
+
 
         while (true) {
             try {
-                characterClass = characterClass.toLowerCase();
+
+                String characterClass = input.nextLine().trim().toLowerCase();
+
 
                 if  (characterClass.equals("guard")) {
-                    //
+                    stats(0, "GUARD");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else if (characterClass.equals("marksman")) {
-                    //
+                    stats(1, "MARKSMAN");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else if (characterClass.equals("magician")) {
-                    //
+                    stats(2, "MAGICIAN");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else if (characterClass.equals("support")) {
-                    //
+                    stats(3, "SUPPORT");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else if (characterClass.equals("swordsman")) {
-                    //
+                    stats(4, "SWORDSMAN");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
-                else if (characterClass.equals("asassin")) {
-                    //
+                else if (characterClass.equals("assassin")) {
+                    stats(5, "ASSASSIN");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else if (characterClass.equals("brute")) {
-                    //
+                    stats(6, "BRUTE");
+                    System.out.println("Class picked successfully!");
                     break;
                 }
 
                 else {
-                    System.err.println("Invalid character choice. Please try again.");
+                    System.err.println("Invalid character choice. Perhaps you spelled it wrong?");
                 }
             }
             catch (Exception e) {
-                System.err.println("Invalid character choice. Please try again.");
+                System.err.println("Invalid character choice. Perhaps you spelled it wrong?");
             }
         }
 
+        String narration5 = ("""
+                As you pick your class, the floating screen suddenly flickered on its own. For a second, you got worried
+                because it might be damaged when you hit it...
+                
+                But after a while, she spoke:
+                
+                FLOATING SCREEN: "Class successfully identified. You may go now.", she said in a dismissive manner.
+                Then, a suddenly, a hole appeared below you, then you fell...
+                
+                Below you, a forest... seemingly stretching all the way to the horizon...
+                
+                You're accelerating fast, so if you hit the ground, surely you will die.
+                
+                YOU: AHHHHH I"M GONNA DIE!
+                
+                But, in your desperate attempt to survive, the floating screen once appeared in front of you.
+                
+                FLOATING SCREEN: "Relax, you won't die."
+                
+                INITIALIZING..................
+                -------------------------------------------------
+                Launching Elysia.exe..............................
+                
+                Those texts appeared on the floating screen console. It just look like a computer CMD back from your previous world.
+                
+                Elysia.exe force teleportation: (10, 24)
+                
+                In a blink of an eye, you landed. As if you just got teleported.
+                
+                The floating screen looked at you (you just felt her looking at you even tho she has no face)
+                
+                FLOATING SCREEN: "Scared? You should remember that sensation from now on! I am Elysia, your personal guide in this world!"
+                """);
 
+            typeWriter(narration5);
+
+            plotProgression += 10;
 
 
 
@@ -226,6 +311,10 @@ public class Game {
 
     }
 
+    public static void partOne() {
+        System.out.println(finaStats);
+    }
+
     public static void typeWriter(String narration) {
         try {
             for (char c : narration.toCharArray()) {
@@ -239,5 +328,9 @@ public class Game {
 
     public static void main(String[] args) {
         Greetings();
+
+        if (plotProgression == 10) {
+            partOne();
+        }
     }
 }
