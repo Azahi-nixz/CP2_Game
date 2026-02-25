@@ -7,6 +7,7 @@ public class Game {
     static int plotProgression = 0;
     static int damage = 0;
     static int turn = 0;
+    static int enemyExp = 0;
 
     //CHARACTER STATS
     static String finalStats = "";
@@ -35,7 +36,7 @@ public class Game {
     };
 
     //ENEMY STATS
-    static int enemyLevel = 0;
+    static int finalEnemyLevel = 0;
     static int enemyATK = 0;
     static int enemyDEF = 0;
     static int enemyHP = 0;
@@ -43,7 +44,6 @@ public class Game {
     static int enemyACC = 0;
     static int enemySPD = 0;
     static int enemySANITY = 0;
-    static String enemyClass = "";
     static String CLASS = "";
     static int enemyDamage = 0;
 
@@ -57,27 +57,27 @@ public class Game {
 
    static int entityStats[][] = {
            //ORCS
-           {100, 20, 20, 0, 20, 10, 0},
-           {200, 50, 40, 0, 30, 20, 0},
-           {500, 100, 80, 40, 30, 40, 100},
+           {100, 20, 20, 0, 20, 10, 0, 100},
+           {200, 50, 40, 0, 30, 20, 0, 300},
+           {500, 100, 80, 40, 30, 40, 100, 500},
 
            //WOLF
-           {75, 50, 20, 0, 30, 50, 0},
-           {150, 100, 30, 0, 40, 70, 0},
-           {200, 150, 40, 20, 70, 100, 0},
+           {75, 50, 20, 0, 30, 50, 0, 70},
+           {150, 100, 30, 0, 40, 70, 0, 250},
+           {200, 150, 40, 20, 70, 100, 0, 700},
 
            //GOBLIN
-           {150, 20, 20, 0, 20,30, 0},
-           {300, 40, 40, 0, 30, 40, 0},
-           {700, 70, 80, 40, 30, 60, 100},
+           {150, 20, 20, 0, 20,30, 0, 200},
+           {300, 40, 40, 0, 30, 40, 0, 500},
+           {700, 70, 80, 40, 30, 60, 100, 1000},
 
            //ELF
-           {200, 50, 80, 100, 40, 50, 400},
-           {450, 120, 100, 350, 80, 80, 750},
-           {1000, 300, 150, 600, 200, 120, 1000},
+           {200, 50, 80, 100, 40, 50, 400, 1000},
+           {450, 120, 100, 350, 80, 80, 750, 5000},
+           {1000, 300, 150, 600, 200, 120, 1000, 10000},
 
            //SLIME
-           {50, 20, 10, 0, 10, 10, 0}
+           {50, 20, 10, 0, 10, 10, 0, 20}
    };
    //================================================================
    // FUNCTION FOR ENEMY STATS COMPUTATION & PRINTING
@@ -91,6 +91,9 @@ public class Game {
         enemySPD    = entityStats[enemyNum][4] + (enemyLevel * 5);
         enemyACC    = entityStats[enemyNum][5] + (enemyLevel * 5);
         enemySANITY = entityStats[enemyNum][6] + (enemyLevel * 5);
+        enemyExp = entityStats[enemyNum][7];
+        finalEnemyLevel = enemyLevel;
+
 
         String stats = """
             ENEMY STATS : %s  LVL - %d
@@ -171,12 +174,14 @@ public class Game {
      //=======================================================
      // LEVEL-UP MECHANICS
      //========================================================
-    public static void levelManagement(int expAdded) {
+    public static void levelManagement() {
+        int expAdded = finalEnemyLevel * enemyExp;
         exp += expAdded;
-        if (exp >= finalExp) {
+        while (exp >= finalExp) {
             level++;
             exp -= finalExp;
             finalExp += 50;
+            System.out.println("CONGRATULATIONS! You leveled up to level " + level);
 
             switch (CLASS.toUpperCase()) {
                 case "GUARD":
@@ -310,6 +315,7 @@ public class Game {
 
         else if (enemyHP < 0) {
             System.out.println("You win!");
+            levelManagement();
         }
     }
 
@@ -385,8 +391,8 @@ public class Game {
 
     public static void Greetings() {
         System.out.println("""
-    Welcome, destined one! You are chosen to partake to a new adventure in the 
-    world of Stellaris-4. But such adventure requires preparation. 
+    Welcome, destined one! You are chosen to partake to a new adventure in the
+    world of Stellaris-4. But such adventure requires preparation.
     With that, would you like to partake in a tutorial? (RECOMMENDED FOR BEGINNERS!)
     Y/N
     """);
@@ -420,7 +426,7 @@ public class Game {
      //====================================================
     public static void mainMenu() {
         String narration = ("""
-                You died in such a boring manner, and as a compensation, you will be reincarnated in 
+                You died in such a boring manner, and as a compensation, you will be reincarnated in
                 another world.
                 
                 You woke up in a seemingly bright place, odd yet you don't feel any dangers. Just peace.
@@ -588,7 +594,8 @@ public class Game {
      // PART 1
      //======================================================
     public static void partOne() {
-        String narration1 = ("n/Look! Enemy Appeared! Let's take it down!");
+
+        String narration1 = ("Look! Enemy Appeared! Let's take it down!\n");
         typeWriter(narration1);
 
         enemy("Wolf" , 2 , 3);
@@ -632,11 +639,7 @@ public class Game {
 
             result();
 
-
         }
-
-
-
     }
 
      //====================================================
